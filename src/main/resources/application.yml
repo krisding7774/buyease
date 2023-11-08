@@ -30,35 +30,55 @@ spring:
          connection-test-query: SELECT 1
          # 連接的保持活躍時間 (毫秒)，超時retired
          keepaliveTime: 30000
-    data:
-      redis:
-        # Redis資料庫索引 (預設為0)
-        database: 0
-        # Redis伺服器地址
-        host: 127.0.0.1
-        # Redis伺服器連線埠
-        port: 6379
-        # Redis伺服器連線密碼 (預設為空)
-        password:  
-        # 連線池最大連線數 (使用負值表示沒有限制)
-        jedis.pool.max-active: 10
-        # 連線池最大等待時間 (使用負值表示沒有限制)
-        jedis.pool.max-wait: 60000
-        # 連線池中的最大空閒連線
-        jedis.pool.max-idle: 5
-        # 連線池中的最小空閒連線
-        jedis.pool.min-idle: 0
+    redis:
+      # Redis資料庫索引 (預設為0)
+      database: 0
+      # Redis伺服器地址
+      host: 127.0.0.1
+      # Redis伺服器連線埠
+      port: 6379
+      # Redis伺服器連線密碼 (預設為空)
+      password:
+      # Redis連接池
+      lettuce:
+        pool:
+          # 連線池最大連線數 (使用負值表示沒有限制)
+          max-active: 10
+          # 連線池最大等待時間 (使用負值表示沒有限制)
+          max-wait: 60000
+          # 連線池中的最大空閒連線
+          max-idle: 5
+          # 連線池中的最小空閒連線
+          min-idle: 0
         # 連線超時時間 (毫秒)
-        timeout: 35000
+        shutdown-timeout: 35000
     security:
         oauth2:
            client:
              registration:
                google:
                   client-id: 
+                  client-secret:
+                  scope:
+               facebook:
+                  client-id:
                   client-secret: 
+                  scope:
+# jwt configuration
 jwt:
-  # 簽名和驗證令牌
-  secret: 
-  # 有效期 24 小時，(毫秒)
-  expiration:  
+  # 存放Token的Header key值
+  token-key: Authorization
+  # 自定义密钥，加盐
+  secret: mySecret
+  # 超时时间 单位秒
+  expiration: 3600
+  # 自定义token 前缀字符
+  token-prefix: Bearer-
+  # accessToken超时时间 单位秒
+  access-token: 3600
+  # 刷新token时间 单位秒
+  refresh-token: 3600
+  # 允许访问的uri
+  permit-all: /oauth/**,/login/**,/logout/**
+  # 需要校验的uri
+  authenticate-uri: /api/**
