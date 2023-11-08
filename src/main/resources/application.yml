@@ -1,1 +1,64 @@
+server:
+    port: 8080
+    tomcat:
+     uri-encoding: utf-8
 
+spring:
+    datasource:
+        # 使用HikariCP連線池
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/
+        username: 
+        password: 
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+         # 最小連線數
+         minimum-idle: 10
+         # 最大連線數
+         maximum-pool-size: 50
+         # 自動提交
+         auto-commit: false
+         # 連線超時的最大時間 (毫秒)，超時retired
+         idle-timeout: 35000
+         # 連接池名字
+         pool-name: ExpendHikariCP
+         # 連接的生命時長 (毫秒)，超時retired
+         max-lifetime: 288000000
+         # 連線的等待時間 (毫秒)，超時retired
+         connection-timeout: 60000
+         # 連接給程式前，先執行查詢確保連線有效
+         connection-test-query: SELECT 1
+         # 連接的保持活躍時間 (毫秒)，超時retired
+         keepaliveTime: 30000
+    data:
+      redis:
+        # Redis資料庫索引 (預設為0)
+        database: 0
+        # Redis伺服器地址
+        host: 127.0.0.1
+        # Redis伺服器連線埠
+        port: 6379
+        # Redis伺服器連線密碼 (預設為空)
+        password:  
+        # 連線池最大連線數 (使用負值表示沒有限制)
+        jedis.pool.max-active: 10
+        # 連線池最大等待時間 (使用負值表示沒有限制)
+        jedis.pool.max-wait: 60000
+        # 連線池中的最大空閒連線
+        jedis.pool.max-idle: 5
+        # 連線池中的最小空閒連線
+        jedis.pool.min-idle: 0
+        # 連線超時時間 (毫秒)
+        timeout: 35000
+    security:
+        oauth2:
+           client:
+             registration:
+               google:
+                  client-id: 
+                  client-secret: 
+jwt:
+  # 簽名和驗證令牌
+  secret: 
+  # 有效期 24 小時，(毫秒)
+  expiration:  
